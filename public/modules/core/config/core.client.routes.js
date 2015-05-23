@@ -4,19 +4,28 @@
 	// Setting up route
 	angular
 		.module('app.core')
-		.config(configure);
+		.run(appRun);
 
-	configure.$inject =	['$stateProvider', '$urlRouterProvider'];
+	// appRun.$inject = ['$stateProvider', '$urlRouterProvider'];
 	
-	function configure ($stateProvider, $urlRouterProvider) {
-		// Redirect to home view when route not found
-		$urlRouterProvider.otherwise('/');
+	/* @ngInject */
+	function appRun(routerHelper) {
+		routerHelper.configureStates(getStates(), '/');
+    }
 
-		// Home state routing
-		$stateProvider.
-		state('home', {
-			url: '/',
-			templateUrl: 'modules/core/views/home.client.view.html'
-		});
+    function getStates() {
+        return [
+            {
+            	state: 'home',
+            	config: {
+            		url: '/',
+            		controller: 'ArticlesController',
+            		controllerAs: 'vm',
+            		templateUrl: 'modules/articles/views/list-articles.client.view.html'
+            	}
+            }
+            ];
+
 	}
+	
 })();

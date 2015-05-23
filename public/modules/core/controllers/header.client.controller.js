@@ -3,20 +3,26 @@
 
 	angular
 		.module('app.core')
-		.controller('HeaderController', ['$scope', 'Authentication', 'Menus',
-		function($scope, Authentication, Menus) {
-			$scope.authentication = Authentication;
-			$scope.isCollapsed = false;
-			$scope.menu = Menus.getMenu('topbar');
+		.controller('HeaderController', HeaderController);
 
-			$scope.toggleCollapsibleMenu = function() {
-				$scope.isCollapsed = !$scope.isCollapsed;
-			};
+	HeaderController.$inject = ['$scope', 'Authentication', 'Menus'];
 
-			// Collapsing the menu after navigation
-			$scope.$on('$stateChangeSuccess', function() {
-				$scope.isCollapsed = false;
-			});
-		}
-	]);
+	/* @ngInject */
+	function HeaderController($scope, Authentication, Menus) {
+		var vm = this;
+
+		vm.authentication = Authentication;
+		vm.isCollapsed = false;
+		vm.menu = Menus.getMenu('topbar');
+
+		vm.toggleCollapsibleMenu = function() {
+			vm.isCollapsed = !vm.isCollapsed;
+		};
+
+		// Collapsing the menu after navigation
+		$scope.$on('$stateChangeSuccess', function() {
+			vm.isCollapsed = false;
+		});
+	}
+	
 })();

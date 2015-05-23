@@ -3,10 +3,16 @@
     
     angular
         .module('app.core')
-        .controller('HomeController', ['$scope', 'Authentication',
-    	function($scope, Authentication) {
-    		// This provides Authentication context.
-    		$scope.authentication = Authentication;
-    	}
-    ]);
+        .controller('HomeController', HomeController);
+
+    HomeController.$inject = ['$scope', 'Authentication'];
+	
+    /* @ngInject */
+    function HomeController($scope, Authentication) {
+        var vm = this;
+
+		// This provides Authentication context.
+		vm.authentication = Authentication;
+	}
+    
 })();
